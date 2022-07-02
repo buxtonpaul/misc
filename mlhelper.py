@@ -81,5 +81,5 @@ def view_dataset(dat_in):
         for i in range(9):
             ax = plt.subplot(3, 3, i + 1)
             plt.imshow(images[i].numpy().astype("uint8"))
-            plt.title(dat_in.class_names[labels[i]])
+            plt.title(dat_in.class_names[tf.argmax(labels[i])])
             plt.axis("off")
