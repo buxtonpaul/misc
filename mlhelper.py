@@ -47,3 +47,17 @@ def create_tensorboard_callback(experiment_name,dir_name="logs/fit"):
   tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
   print(f"saving Tensorboard logfiles to {log_dir}")
   return tensorboard_callback
+
+def do_multiclass_prediction(model,filename,classnames = class_names):
+  """
+  import an image from filename, 
+  makes a prediction and plots the image with the predicted class as title
+  """
+  img = mpimg.imread(filename)
+  res=model.predict(tf.expand_dims(img,0))
+  idx = tf.argmax(res,axis=1)
+  classname = classnames[tuple(idx)]
+
+  plt.imshow(img)
+  plt.title(classname)
+  plt.axis("off")
