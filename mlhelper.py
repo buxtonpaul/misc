@@ -54,7 +54,7 @@ def create_tensorboard_callback(experiment_name, dir_name="logs/fit"):
     return tensorboard_callback
 
 
-def do_multiclass_prediction(model, filename, classnames=class_names, resizing=None):
+def do_multiclass_prediction(model, filename, classnames, resizing=None):
     """
     Import an image from filename, 
     makes a prediction and plots the image with the predicted class as title
