@@ -29,6 +29,7 @@ def view_random_image(target_dir, target_class):
 
   # read in the image and plot using matplotlib
   img = mpimg.imread(target_folder + '/' + random_image[0])
+  
   plt.imshow(img)
   plt.title(target_class)
   plt.axis("off")
@@ -54,6 +55,37 @@ def do_multiclass_prediction(model,filename,classnames = class_names):
   makes a prediction and plots the image with the predicted class as title
   """
   img = mpimg.imread(filename)
+  res=model.predict(tf.expand_dims(img,0))
+  idx = tf.argmax(res,axis=1)
+  classname = classnames[tuple(idx)]
+
+  plt.imshow(img)
+  plt.title(classname)
+  plt.axis("off")
+  
+import matplotlib.pyplot as plt
+
+def view_dataset(dat_in):
+  """
+  Plots a set of inputs from a tensorflow dataset
+  """
+  plt.figure(figsize=(10, 10))
+  for images, labels in dat_in.take(1):
+    for i in range(9):
+      ax = plt.subplot(3, 3, i + 1)
+      plt.imshow(images[i].numpy().astype("uint8"))
+      plt.title(class_names[labels[i]])
+      plt.axis("off")
+      
+ def do_multiclass_prediction(model,filename,classnames = class_names,risizing=None):
+  """
+  Import an image from filename, 
+  makes a prediction and plots the image with the predicted class as title
+  """
+  img = mpimg.imread(filename)
+  if resizing is not None:
+    img=img.resize(resizing)
+  
   res=model.predict(tf.expand_dims(img,0))
   idx = tf.argmax(res,axis=1)
   classname = classnames[tuple(idx)]
