@@ -54,20 +54,26 @@ def create_tensorboard_callback(experiment_name, dir_name="logs/fit"):
     return tensorboard_callback
 
 
-def do_multiclass_prediction(model, filename, classnames, resizing=None):
+from PIL import Image
+import numpy as np
+
+def do_multiclass_prediction(model, filename, classnames, resizing=None,rescale=1.0):
     """
     Import an image from filename, 
     makes a prediction and plots the image with the predicted class as title
     """
-    img = mpimg.imread(filename)
+    img = Image.open(filename)
+
     if resizing is not None:
-        img = img.resize(resizing)
-
-    res = model.predict(tf.expand_dims(img, 0))
-    idx = tf.argmax(res, axis=1)
-    classname = classnames[tuple(idx)]
-
+        img = img.resize( (224, 224))
     plt.imshow(img)
+
+    if resizing is not None:
+      img = np.asarray(img).reshape((1,) + resizing + (3,))
+    res = model.predict(img)
+    idx = tf.argmax(res, axis=1)[0]
+    classname = classnames[idx]
+
     plt.title(classname)
     plt.axis("off")
 
