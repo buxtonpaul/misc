@@ -22,8 +22,6 @@ def unzip_data(filename):
 
 
 # visualise images
-
-
 def view_random_image(target_dir, target_class):
     """
     Displays a random image for the folder 'target_dir' subfolder 'target_class'
