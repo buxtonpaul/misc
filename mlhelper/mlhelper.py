@@ -57,7 +57,7 @@ def create_tensorboard_callback(experiment_name, dir_name="logs/fit"):
 
 def do_multiclass_prediction(model, filename, classnames, resizing=None, rescale=1.0):
     """
-    Import an image from filename, 
+    Import an image from filename,
     makes a prediction and plots the image with the predicted class as title
     """
     # todo, rework this to use
@@ -144,7 +144,7 @@ def compare_historys(original_history, new_history, initial_epochs=5):
     Args:
       original_history: History object from original model (before new_history)
       new_history: History object from continued model training (after original_history)
-      initial_epochs: Number of epochs in original_history (new_history plot starts from here) 
+      initial_epochs: Number of epochs in original_history (new_history plot starts from here)
     """
 
     # Get original history measurements
@@ -220,3 +220,17 @@ def calculate_results(y_true, y_pred):
                      "recall": model_recall,
                      "f1": model_f1}
     return model_results
+
+
+def wget(url):
+    '''
+    Downloads the file specified in the url in the current folder and returns the filename
+    '''
+    import requests
+    # url = 'https://pypi.python.org/packages/source/g/guppy/' + fname
+    elements = url.split('/')
+    fname = elements[-1]
+    r = requests.get(url)
+    open(fname , 'wb').write(r.content)
+    return fname
+  
